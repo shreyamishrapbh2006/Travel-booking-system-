@@ -1,7 +1,7 @@
-Microsoft Windows [Version 10.0.26200.7705]
+Microsoft Windows [Version 10.0.26200.7922]
 (c) Microsoft Corporation. All rights reserved.
 
-C:\Users\maury>cd ..
+C:\Users\shrey>cd ..
 
 C:\Users>cd ..
 
@@ -21,84 +21,87 @@ Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-MariaDB [(none)]> CREATE DATABASE TravelBookingSystem;
-Query OK, 1 row affected (0.002 sec)
+MariaDB [(none)]> create database Travelbookingsystem;
+Query OK, 1 row affected (0.003 sec)
 
-MariaDB [(none)]> USE TravelBookingSystem;
+MariaDB [(none)]> use Travelbookingsystem;
 Database changed
-MariaDB [TravelBookingSystem]> CREATE TABLE CUSTOMER(
-    -> Customer_ID INT PRIMARY KEY AUTO_INCREMENT,
-    -> Name VARCHAR(100),
+MariaDB [Travelbookingsystem]> CREATE TABLE CUSTOMER(
+    -> customer_ID INT PRIMARY KEY AUTO_INCREMENT,
+    -> Name VARCHAR(100) NOT NULL,
     -> Email VARCHAR(100) UNIQUE,
     -> Phone VARCHAR(15),
     -> Address TEXT,
-    -> Password VARCHAR(100));
-Query OK, 0 rows affected (0.041 sec)
+    -> Password VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.037 sec)
 
-MariaDB [TravelBookingSystem]> CREATE TABLE PACKAGE (
+MariaDB [Travelbookingsystem]> CREATE TABLE Package (
     -> Package_ID INT PRIMARY KEY AUTO_INCREMENT,
-    -> Package_Name VARCHAR(100),
+    -> Package_Name VARCHAR(100) NOT NULL,
     -> Destination VARCHAR(100),
     -> Duration INT,
-    ->  Price DECIMAL(10,2),
-    -> Description TEXT);
-Query OK, 0 rows affected (0.016 sec)
+    -> Price DECIMAL(10,2),
+    -> Description TEXT );
+Query OK, 0 rows affected (0.020 sec)
 
-MariaDB [TravelBookingSystem]> CREATE TABLE AGENT(
+MariaDB [Travelbookingsystem]> CREATE TABLE Agent (
     -> Agent_ID INT PRIMARY KEY AUTO_INCREMENT,
-    ->  Name VARCHAR(100),
+    -> Name VARCHAR(100) NOT NULL,
     -> Email VARCHAR(100),
     -> Phone VARCHAR(15),
-    -> Commission_Percentage DECIMAL(5,2));
-Query OK, 0 rows affected (0.029 sec)
+    -> Commission_Percentage DECIMAL(5,2) );
+Query OK, 0 rows affected (0.019 sec)
 
-MariaDB [TravelBookingSystem]> CREATE TABLE BOOKING (
-    -> Booking_ID INT PRIMARY KEY AUTO_INCREMENT,
+MariaDB [Travelbookingsystem]> CREATE TABLE Booking (
+    -> booking_ID INT PRIMARY KEY AUTO_INCREMENT,
     -> Booking_Date DATE,
     -> Travel_Date DATE,
-    ->  Customer_ID INT,
+    -> Customer_ID INT,
     -> Package_ID INT,
+    -> Agent_ID INT,
     -> Number_of_People INT,
-    -> Total_Amount DECIMAL(10,2),
+    ->  Total_Amount DECIMAL(10,2),
     -> FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
-    -> FOREIGN KEY (Package_ID) REFERENCES Package(Package_ID));
-Query OK, 0 rows affected (0.060 sec)
+    -> FOREIGN KEY (Package_ID) REFERENCES Package(Package_ID),
+    -> FOREIGN KEY (Agent_ID) REFERENCES Agent(Agent_ID) );
+Query OK, 0 rows affected (0.044 sec)
 
-MariaDB [TravelBookingSystem]> CREATE TABLE PAYMENT (
+MariaDB [Travelbookingsystem]> CREATE TABLE Payment (
     -> Payment_ID INT PRIMARY KEY AUTO_INCREMENT,
     -> Booking_ID INT,
     -> Payment_Date DATE,
     -> Amount DECIMAL(10,2),
-    ->  Payment_Method VARCHAR(50),
+    -> Payment_Method VARCHAR(50),
     -> Payment_Status VARCHAR(50),
-    -> FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID));
-Query OK, 0 rows affected (0.057 sec)
+    -> FOREIGN KEY (Booking_ID) REFERENCES Booking(Booking_ID) );
+Query OK, 0 rows affected (0.047 sec)
 
-MariaDB [TravelBookingSystem]> INSERT INTO Customer (Name, Email, Phone, Address, Password)
-    -> VALUES('Omika', 'omika@gmail.com', '9876543210', 'Lucknow', '12345'),
+MariaDB [Travelbookingsystem]> INSERT INTO Customer (Name, Email, Phone, Address, Password) VALUES
+    -> ('Omika', 'omika@gmail.com', '9876543210', 'Lucknow', '12345'),
     -> ('Shreya', 'shreya@gmail.com', '9876501234', 'Delhi', 'abc123');
-Query OK, 2 rows affected (0.046 sec)
+Query OK, 2 rows affected (0.053 sec)
 Records: 2  Duplicates: 0  Warnings: 0
 
-MariaDB [TravelBookingSystem]> INSERT INTO Package (Package_Name, Destination, Duration, Price, Description)
-    -> VALUES('Goa Trip', 'Goa', 5, 15000.00, 'Beach vacation package'),
+MariaDB [Travelbookingsystem]> INSERT INTO Package (Package_Name, Destination, Duration, Price, Description) VALUES
+    -> ('Goa Trip', 'Goa', 5, 15000.00, 'Beach vacation package'),
     -> ('Manali Tour', 'Manali', 7, 20000.00, 'Hill station package');
-Query OK, 2 rows affected (0.005 sec)
+Query OK, 2 rows affected (0.009 sec)
 Records: 2  Duplicates: 0  Warnings: 0
 
-MariaDB [TravelBookingSystem]> INSERT INTO Agent (Name, Email, Phone, Commission_Percentage)
-    -> VALUES('Rahul', 'rahul@travel.com', '9999999999', 10.00);
-Query OK, 1 row affected (0.006 sec)
+MariaDB [Travelbookingsystem]> INSERT INTO Agent (Name, Email, Phone, Commission_Percentage) VALUES
+    -> ('Rahul', 'rahul@travel.com', '9999999999', 10.00);
+Query OK, 1 row affected (0.007 sec)
 
-MariaDB [TravelBookingSystem]> INSERT INTO Booking (Booking_Date, Travel_Date, Customer_ID, Package_ID, Number_of_People, Total_Amount)
-    -> VALUES('2025-02-01', '2025-03-01', 1, 1, 2, 30000.00);
-Query OK, 1 row affected (0.018 sec)
+MariaDB [Travelbookingsystem]> INSERT INTO Booking (Booking_Date, Travel_Date, Customer_ID, Package_ID, Agent_ID, Number_of_People, Total_Amount) VALUES
+    -> ('2025-02-01', '2025-03-01', 1, 1, 1, 2, 30000.00);
+Query OK, 1 row affected (0.009 sec)
 
-MariaDB [TravelBookingSystem]> INSERT INTO Payment (Booking_ID, Payment_Date, Amount, Payment_Method, Payment_Status)
-    -> VALUES(1, '2025-02-02', 30000.00, 'UPI', 'Completed');
-Query OK, 1 row affected (0.020 sec)
+MariaDB [Travelbookingsystem]> INSERT INTO Payment (Booking_ID, Payment_Date, Amount, Payment_Method, Payment_Status) VALUES
+    -> (1, '2025-02-02', 30000.00, 'UPI', 'Completed');
+Query OK, 1 row affected (0.011 sec)
 
-MariaDB [TravelBookingSystem]> SHOW TABLES;
+MariaDB [Travelbookingsystem]> SHOW TABLES;
 +-------------------------------+
 | Tables_in_travelbookingsystem |
 +-------------------------------+
@@ -108,26 +111,26 @@ MariaDB [TravelBookingSystem]> SHOW TABLES;
 | package                       |
 | payment                       |
 +-------------------------------+
-5 rows in set (0.001 sec)
+5 rows in set (0.002 sec)
 
-MariaDB [TravelBookingSystem]> SELECT * FROM CUSTOMER;
+MariaDB [Travelbookingsystem]> SELECT * FROM CUSTOMER;
 +-------------+--------+------------------+------------+---------+----------+
-| Customer_ID | Name   | Email            | Phone      | Address | Password |
+| customer_ID | Name   | Email            | Phone      | Address | Password |
 +-------------+--------+------------------+------------+---------+----------+
 |           1 | Omika  | omika@gmail.com  | 9876543210 | Lucknow | 12345    |
 |           2 | Shreya | shreya@gmail.com | 9876501234 | Delhi   | abc123   |
 +-------------+--------+------------------+------------+---------+----------+
 2 rows in set (0.001 sec)
 
-MariaDB [TravelBookingSystem]> SELECT * FROM AGENT;
+MariaDB [Travelbookingsystem]> SELECT * FROM AGENT;
 +----------+-------+------------------+------------+-----------------------+
 | Agent_ID | Name  | Email            | Phone      | Commission_Percentage |
 +----------+-------+------------------+------------+-----------------------+
 |        1 | Rahul | rahul@travel.com | 9999999999 |                 10.00 |
 +----------+-------+------------------+------------+-----------------------+
-1 row in set (0.000 sec)
+1 row in set (0.001 sec)
 
-MariaDB [TravelBookingSystem]> SELECT * FROM PACKAGE;
+MariaDB [Travelbookingsystem]> SELECT * FROM PACKAGE;
 +------------+--------------+-------------+----------+----------+------------------------+
 | Package_ID | Package_Name | Destination | Duration | Price    | Description            |
 +------------+--------------+-------------+----------+----------+------------------------+
@@ -136,7 +139,7 @@ MariaDB [TravelBookingSystem]> SELECT * FROM PACKAGE;
 +------------+--------------+-------------+----------+----------+------------------------+
 2 rows in set (0.001 sec)
 
-MariaDB [TravelBookingSystem]> SELECT * FROM PAYMENT;
+MariaDB [Travelbookingsystem]>  SELECT * FROM PAYMENT;
 +------------+------------+--------------+----------+----------------+----------------+
 | Payment_ID | Booking_ID | Payment_Date | Amount   | Payment_Method | Payment_Status |
 +------------+------------+--------------+----------+----------------+----------------+
@@ -144,10 +147,10 @@ MariaDB [TravelBookingSystem]> SELECT * FROM PAYMENT;
 +------------+------------+--------------+----------+----------------+----------------+
 1 row in set (0.001 sec)
 
-MariaDB [TravelBookingSystem]> SELECT * FROM BOOKING;
-+------------+--------------+-------------+-------------+------------+------------------+--------------+
-| Booking_ID | Booking_Date | Travel_Date | Customer_ID | Package_ID | Number_of_People | Total_Amount |
-+------------+--------------+-------------+-------------+------------+------------------+--------------+
-|          1 | 2025-02-01   | 2025-03-01  |           1 |          1 |                2 |     30000.00 |
-+------------+--------------+-------------+-------------+------------+------------------+--------------+
+MariaDB [Travelbookingsystem]> SELECT * FROM BOOKING;
++------------+--------------+-------------+-------------+------------+----------+------------------+--------------+
+| booking_ID | Booking_Date | Travel_Date | Customer_ID | Package_ID | Agent_ID | Number_of_People | Total_Amount |
++------------+--------------+-------------+-------------+------------+----------+------------------+--------------+
+|          1 | 2025-02-01   | 2025-03-01  |           1 |          1 |        1 |                2 |     30000.00 |
++------------+--------------+-------------+-------------+------------+----------+------------------+--------------+
 1 row in set (0.001 sec)
