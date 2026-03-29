@@ -4,7 +4,7 @@
 
 ## 1. Show all records from Customer table
 ```sql
-MariaDB [Travelbookingsystem]> SELECT * FROM CUSTOMER;
+ SELECT * FROM CUSTOMER;
 +-------------+--------+------------------+------------+---------+----------+
 | customer_ID | Name   | Email            | Phone      | Address | Password |
 +-------------+--------+------------------+------------+---------+----------+
@@ -15,8 +15,8 @@ MariaDB [Travelbookingsystem]> SELECT * FROM CUSTOMER;
 ```
 
 ## 2. Show packages with price greater than 15000`
-```
-MariaDB [Travelbookingsystem]> SELECT * FROM Package
+```sql
+ SELECT * FROM Package
     -> WHERE Price > 15000;
 +------------+--------------+-------------+----------+----------+----------------------+
 | Package_ID | Package_Name | Destination | Duration | Price    | Description          |
@@ -26,9 +26,9 @@ MariaDB [Travelbookingsystem]> SELECT * FROM Package
 1 row in set (0.001 sec)
 ```
 ## 3.Show booking details with customer name and total amount``
-```
+```sql
 
-MariaDB [Travelbookingsystem]> SELECT Booking.Booking_ID, Customer.Name, Booking.Travel_Date, Booking.Total_Amount FROM Booking
+ SELECT Booking.Booking_ID, Customer.Name, Booking.Travel_Date, Booking.Total_Amount FROM Booking
     -> JOIN Customer ON Booking.Customer_ID = Customer.Customer_ID;
 +------------+-------+-------------+--------------+
 | Booking_ID | Name  | Travel_Date | Total_Amount |
@@ -38,8 +38,8 @@ MariaDB [Travelbookingsystem]> SELECT Booking.Booking_ID, Customer.Name, Booking
 1 row in set (0.002 sec)
 ```
 ## 4.Show booking details with package name and destination
-```
-MariaDB [Travelbookingsystem]> SELECT Booking.Booking_ID, Package.Package_Name, Package.Destination
+```sql
+SELECT Booking.Booking_ID, Package.Package_Name, Package.Destination
     -> FROM Booking
     -> JOIN Package ON Booking.Package_ID = Package.Package_ID;
 +------------+--------------+-------------+
@@ -50,8 +50,8 @@ MariaDB [Travelbookingsystem]> SELECT Booking.Booking_ID, Package.Package_Name, 
 1 row in set (0.001 sec)
 ```
 ## 5. Show agent name who handled booking
-```
-MariaDB [Travelbookingsystem]> SELECT Booking.Booking_ID, Agent.Name AS Agent_Name FROM Booking JOIN Agent ON Booking.Agent_ID = Agent.Agent_ID;
+```sql
+ SELECT Booking.Booking_ID, Agent.Name AS Agent_Name FROM Booking JOIN Agent ON Booking.Agent_ID = Agent.Agent_ID;
 +------------+------------+
 | Booking_ID | Agent_Name |
 +------------+------------+
@@ -60,8 +60,8 @@ MariaDB [Travelbookingsystem]> SELECT Booking.Booking_ID, Agent.Name AS Agent_Na
 1 row in set (0.001 sec)
 ```
 ## 6. Show complete booking details (Customer + Package + Agent)
-```
-MariaDB [Travelbookingsystem]> SELECT
+```sql
+ SELECT
     ->  Booking.Booking_ID,
     ->  Customer.Name AS Customer_Name,
     ->  Package.Package_Name,
@@ -79,8 +79,8 @@ MariaDB [Travelbookingsystem]> SELECT
 1 row in set (0.002 sec)
 ```
 ## 7.Count total number of customers
-```
-MariaDB [Travelbookingsystem]> SELECT COUNT(*) AS Total_Customers FROM Customer;
+```sql
+ SELECT COUNT(*) AS Total_Customers FROM Customer;
 +-----------------+
 | Total_Customers |
 +-----------------+
@@ -89,8 +89,8 @@ MariaDB [Travelbookingsystem]> SELECT COUNT(*) AS Total_Customers FROM Customer;
 1 row in set (0.001 sec)
 ```
 ## 8.Calculate total revenue
-```
-MariaDB [Travelbookingsystem]> SELECT SUM(Total_Amount) AS Total_Revenue FROM Booking;
+```sql
+ SELECT SUM(Total_Amount) AS Total_Revenue FROM Booking;
 +---------------+
 | Total_Revenue |
 +---------------+
@@ -99,8 +99,8 @@ MariaDB [Travelbookingsystem]> SELECT SUM(Total_Amount) AS Total_Revenue FROM Bo
 1 row in set (0.001 sec)
 ```
 ## 9.Find average package price
-```
-MariaDB [Travelbookingsystem]> SELECT AVG(Price) AS Average_Price FROM Package;
+```sql
+SELECT AVG(Price) AS Average_Price FROM Package;
 +---------------+
 | Average_Price |
 +---------------+
@@ -109,8 +109,8 @@ MariaDB [Travelbookingsystem]> SELECT AVG(Price) AS Average_Price FROM Package;
 1 row in set (0.001 sec)
 ```
 ## 10. Count bookings per customer
-```
-MariaDB [Travelbookingsystem]> SELECT Customer_ID, COUNT(*) AS Total_Bookings FROM Booking GROUP BY Customer_ID;
+```sql
+SELECT Customer_ID, COUNT(*) AS Total_Bookings FROM Booking GROUP BY Customer_ID;
 +-------------+----------------+
 | Customer_ID | Total_Bookings |
 +-------------+----------------+
@@ -119,8 +119,8 @@ MariaDB [Travelbookingsystem]> SELECT Customer_ID, COUNT(*) AS Total_Bookings FR
 1 row in set (0.001 sec)
 ```
 ##  11. Show payment details
-```
-MariaDB [Travelbookingsystem]> SELECT Payment.Payment_ID, Payment.Booking_ID, Payment.Amount, Payment.Payment_Status FROM Payment;
+```sql
+SELECT Payment.Payment_ID, Payment.Booking_ID, Payment.Amount, Payment.Payment_Status FROM Payment;
 +------------+------------+----------+----------------+
 | Payment_ID | Booking_ID | Amount   | Payment_Status |
 +------------+------------+----------+----------------+
@@ -129,8 +129,8 @@ MariaDB [Travelbookingsystem]> SELECT Payment.Payment_ID, Payment.Booking_ID, Pa
 1 row in set (0.001 sec)
 ```
 ## 12. Show customer who booked Goa Trip
-```
-MariaDB [Travelbookingsystem]> SELECT Customer.Name
+```sql
+ SELECT Customer.Name
     -> FROM Customer
     -> JOIN Booking ON Customer.Customer_ID = Booking.Customer_ID
     -> JOIN Package ON Booking.Package_ID = Package.Package_ID
@@ -143,8 +143,8 @@ MariaDB [Travelbookingsystem]> SELECT Customer.Name
 1 row in set (0.001 sec)
 ```
 ## 13. Show bookings with more than 1 person
-```
-MariaDB [Travelbookingsystem]> SELECT * FROM Booking
+```sql
+ SELECT * FROM Booking
     -> WHERE Number_of_People > 1;
 +------------+--------------+-------------+-------------+------------+----------+------------------+--------------+
 | booking_ID | Booking_Date | Travel_Date | Customer_ID | Package_ID | Agent_ID | Number_of_People | Total_Amount |
@@ -154,8 +154,8 @@ MariaDB [Travelbookingsystem]> SELECT * FROM Booking
 1 row in set (0.001 sec)
 ```
 ## 14. Show highest payment 
-```
-MariaDB [Travelbookingsystem]> SELECT MAX(Amount) AS Highest_Payment FROM Payment;
+```sql
+SELECT MAX(Amount) AS Highest_Payment FROM Payment;
 +-----------------+
 | Highest_Payment |
 +-----------------+
@@ -164,8 +164,8 @@ MariaDB [Travelbookingsystem]> SELECT MAX(Amount) AS Highest_Payment FROM Paymen
 1 row in set (0.001 sec)
 ```
 ## 15. Show completed payments
-```
-MariaDB [Travelbookingsystem]> SELECT * FROM Payment
+```sql
+ SELECT * FROM Payment
     -> WHERE Payment_Status = 'Completed';
 +------------+------------+--------------+----------+----------------+----------------+
 | Payment_ID | Booking_ID | Payment_Date | Amount   | Payment_Method | Payment_Status |
